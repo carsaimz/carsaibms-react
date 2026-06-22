@@ -1,0 +1,11 @@
+import { Link } from 'react-router-dom';
+export default function ErrorPage({ code=500, message='Erro interno do servidor' }: { code?: number; message?: string }) {
+  return (
+    <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 text-center px-4">
+      <div className="text-8xl font-black text-gray-100 dark:text-slate-800">{code}</div>
+      <h1 className="text-2xl font-black">{message}</h1>
+      <p className="text-gray-500 dark:text-slate-400">Ocorreu um erro. Por favor tente novamente ou contacte o suporte.</p>
+      <Link to="/" className="rounded-xl bg-primary-600 px-6 py-2.5 text-sm font-bold text-white hover:bg-primary-700">← Início</Link>
+    </div>
+  );
+}

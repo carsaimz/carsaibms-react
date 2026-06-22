@@ -1,0 +1,53 @@
+name: Deploy — Server (API)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'server/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy API to production
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install & build
+        working-directory: server
+        run: |
+          npm ci
+          npm run build
+
+      # Example: deploy via SSH to a VPS. Adjust to Railway/Fly/Render as needed.
+      - name: Deploy via SSH (VPS / DigitalOcean / Hetzner)
+        if: ${{ vars.DEPLOY_TARGET == 'ssh' }}
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            cd /var/www/carsai-bms/server
+            git pull origin main
+            npm ci
+            npm run build
+            npm run db:migrate
+            pm2 restart carsai-api || pm2 start dist/index.js --name carsai-api
+
+      - name: Deploy to Railway
+        if: ${{ vars.DEPLOY_TARGET == 'railway' }}
+        run: |
+          npm install -g @railway/cli
+          railway up --service server
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
