@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "cap:sync": "cap sync",
     "cap:android": "cap open android",
-    "cap:build": "npm run build && cap sync android"
+    "cap:build": "npm run build && cap sync android",
+    "type-check": "tsc --noEmit",
+    "build:check": "tsc --noEmit && vite build"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.45.1",
@@ -21,7 +23,6 @@
     "zustand": "^4.5.2",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.3",
-    "zustand/middleware": null,
     "@capacitor/core": "^6.1.2",
     "@capacitor/android": "^6.1.2",
     "@capacitor/camera": "^6.0.2",

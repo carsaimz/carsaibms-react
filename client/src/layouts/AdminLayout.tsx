@@ -4,7 +4,7 @@ import {
   LayoutDashboard, Package, ShoppingCart, Users, LifeBuoy, BarChart3,
   Settings, LogOut, Menu, X, FileText, Tag, Building2, Wrench,
   Activity, Bell, CreditCard, Layers, ShoppingBag, BookOpen,
-  TrendingUp, User, ChevronDown, ChevronRight,
+  TrendingUp, User, Download, Shield, ScrollText, Mail, Image, CheckSquare,
 } from 'lucide-react';
 import { useAuthStore } from '../store/auth';
 import { api } from '../lib/api';
@@ -14,35 +14,42 @@ import OfflineBanner from '../components/shared/OfflineBanner';
 
 const navGroups = [
   { label: 'Principal', items: [
-    { to: '/admin',              label: 'Dashboard',    icon: LayoutDashboard, end: true },
-    { to: '/admin/orders',       label: 'Pedidos',      icon: ShoppingCart },
-    { to: '/admin/customers',    label: 'Clientes',     icon: Users },
-    { to: '/admin/tickets',      label: 'Tickets',      icon: LifeBuoy },
-    { to: '/admin/notifications',label: 'Notificações', icon: Bell },
+    { to: '/admin',                end: true, label: 'Dashboard',    icon: LayoutDashboard },
+    { to: '/admin/orders',                    label: 'Pedidos',      icon: ShoppingCart },
+    { to: '/admin/orders/new',                label: 'Novo Pedido',  icon: ShoppingCart },
+    { to: '/admin/customers',                 label: 'Clientes',     icon: Users },
+    { to: '/admin/tickets',                   label: 'Tickets',      icon: LifeBuoy },
+    { to: '/admin/notifications',             label: 'Notificações', icon: Bell },
+    { to: '/admin/tasks',                     label: 'Tarefas',      icon: CheckSquare },
   ]},
   { label: 'Catálogo', items: [
-    { to: '/admin/products',     label: 'Produtos',     icon: Package },
-    { to: '/admin/services',     label: 'Serviços',     icon: Wrench },
-    { to: '/admin/categories',   label: 'Categorias',   icon: Layers },
-    { to: '/admin/stock',        label: 'Stock',        icon: BarChart3 },
-    { to: '/admin/suppliers',    label: 'Fornecedores', icon: Building2 },
-    { to: '/admin/coupons',      label: 'Cupões',       icon: Tag },
+    { to: '/admin/products',                  label: 'Produtos',     icon: Package },
+    { to: '/admin/services',                  label: 'Serviços',     icon: Wrench },
+    { to: '/admin/categories',                label: 'Categorias',   icon: Layers },
+    { to: '/admin/stock',                     label: 'Stock',        icon: BarChart3 },
+    { to: '/admin/suppliers',                 label: 'Fornecedores', icon: Building2 },
+    { to: '/admin/coupons',                   label: 'Cupões',       icon: Tag },
+    { to: '/admin/banners',                   label: 'Banners',      icon: Image },
   ]},
   { label: 'Finanças', items: [
-    { to: '/admin/financial',    label: 'Financeiro',   icon: TrendingUp },
-    { to: '/admin/payments',     label: 'Pagamentos',   icon: CreditCard },
-    { to: '/admin/sales',        label: 'Vendas POS',   icon: ShoppingBag },
-    { to: '/admin/reports',      label: 'Relatórios',   icon: BarChart3 },
+    { to: '/admin/financial',                 label: 'Financeiro',   icon: TrendingUp },
+    { to: '/admin/payments',                  label: 'Pagamentos',   icon: CreditCard },
+    { to: '/admin/sales',                     label: 'Vendas POS',   icon: ShoppingBag },
+    { to: '/admin/reports',                   label: 'Relatórios',   icon: BarChart3 },
+    { to: '/admin/export',                    label: 'Exportação',   icon: Download },
   ]},
   { label: 'Conteúdo', items: [
-    { to: '/admin/posts',        label: 'Blog',         icon: BookOpen },
-    { to: '/admin/pages',        label: 'Páginas',      icon: FileText },
+    { to: '/admin/posts',                     label: 'Blog',         icon: BookOpen },
+    { to: '/admin/pages',                     label: 'Páginas',      icon: FileText },
+    { to: '/admin/emails',                    label: 'Emails',       icon: Mail },
   ]},
   { label: 'Sistema', items: [
-    { to: '/admin/users',        label: 'Utilizadores', icon: Users },
-    { to: '/admin/logs',         label: 'Logs',         icon: Activity },
-    { to: '/admin/settings',     label: 'Definições',   icon: Settings },
-    { to: '/admin/profile',      label: 'Meu Perfil',   icon: User },
+    { to: '/admin/users',                     label: 'Utilizadores', icon: Users },
+    { to: '/admin/roles',                     label: 'Roles',        icon: Shield },
+    { to: '/admin/logs',                      label: 'Logs',         icon: Activity },
+    { to: '/admin/changelog',                 label: 'Changelog',    icon: ScrollText },
+    { to: '/admin/settings',                  label: 'Definições',   icon: Settings },
+    { to: '/admin/profile',                   label: 'Meu Perfil',   icon: User },
   ]},
 ];
 
@@ -50,7 +57,7 @@ function SideLink({ to, label, icon: Icon, end }: { to: string; label: string; i
   return (
     <NavLink to={to} end={end}
       className={({ isActive }) =>
-        `flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+        `flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
           isActive ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-700/60 hover:text-white'
         }`
       }
@@ -63,12 +70,12 @@ function SideLink({ to, label, icon: Icon, end }: { to: string; label: string; i
 
 export default function AdminLayout() {
   const [open, setOpen] = useState(false);
-  const user = useAuthStore((s) => s.user);
-  const logout = useAuthStore((s) => s.logout);
+  const user = useAuthStore(s => s.user);
+  const logout = useAuthStore(s => s.logout);
   const navigate = useNavigate();
 
   async function handleLogout() {
-    try { await api.post('/auth/logout'); } catch { /**/ }
+    try { await api.post('/auth/logout'); } catch { }
     logout(); navigate('/login');
   }
 
@@ -77,7 +84,7 @@ export default function AdminLayout() {
       <OfflineBanner />
       <div className="flex flex-1">
         <aside className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-slate-900 transition-transform md:relative md:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
-          <div className="flex h-14 items-center justify-between px-4 border-b border-slate-800">
+          <div className="flex h-14 items-center justify-between px-4 border-b border-slate-800 flex-shrink-0">
             <div className="flex items-center gap-2">
               <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-600 font-black text-white text-sm">C</div>
               <span className="font-bold text-white text-sm">Carsai Admin</span>
@@ -86,17 +93,17 @@ export default function AdminLayout() {
           </div>
 
           <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-4">
-            {navGroups.map((group) => (
+            {navGroups.map(group => (
               <div key={group.label}>
                 <p className="px-3 mb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">{group.label}</p>
                 <div className="space-y-0.5">
-                  {group.items.map((item) => <SideLink key={item.to} {...item} />)}
+                  {group.items.map(item => <SideLink key={item.to} {...item} />)}
                 </div>
               </div>
             ))}
           </nav>
 
-          <div className="border-t border-slate-800 p-3">
+          <div className="border-t border-slate-800 p-3 flex-shrink-0">
             <div className="mb-2 flex items-center gap-2 rounded-lg bg-slate-800 px-3 py-2">
               <Avatar name={user?.name} size="sm" />
               <div className="min-w-0 flex-1">

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { api } from './lib/api';
-import { useAnalytics } from './hooks/useAnalytics';
 import { useAuthStore } from './store/auth';
+import { useAnalytics } from './hooks/useAnalytics';
 
+// Layouts
 import AuthLayout     from './layouts/AuthLayout';
 import PublicLayout   from './layouts/PublicLayout';
 import CustomerLayout from './layouts/CustomerLayout';
@@ -20,6 +21,7 @@ import Home          from './pages/public/Home';
 import PubProducts   from './pages/public/Products';
 import ProductDetail from './pages/public/ProductDetail';
 import PubServices   from './pages/public/Services';
+import ServiceDetail from './pages/public/ServiceDetail';
 import BlogIndex     from './pages/public/blog/index';
 import BlogPost      from './pages/public/blog/Post';
 import Contact       from './pages/public/Contact';
@@ -31,16 +33,18 @@ import ErrorPage     from './pages/public/Error';
 import Maintenance   from './pages/public/Maintenance';
 
 // Customer
-import Dashboard    from './pages/customer/Dashboard';
-import Orders       from './pages/customer/Orders';
-import OrderDetail  from './pages/customer/OrderDetail';
-import Invoices     from './pages/customer/Invoices';
-import Tickets      from './pages/customer/Tickets';
-import TicketDetail from './pages/customer/TicketDetail';
-import Profile      from './pages/customer/Profile';
-import CustPayments from './pages/customer/Payments';
-import CustServices from './pages/customer/Services';
-import CustQuote    from './pages/customer/Quote';
+import Dashboard       from './pages/customer/Dashboard';
+import Orders          from './pages/customer/Orders';
+import OrderDetail     from './pages/customer/OrderDetail';
+import OrderNew        from './pages/customer/OrderNew';
+import Invoices        from './pages/customer/Invoices';
+import Tickets         from './pages/customer/Tickets';
+import TicketDetail    from './pages/customer/TicketDetail';
+import Profile         from './pages/customer/Profile';
+import CustPayments    from './pages/customer/Payments';
+import CustServices    from './pages/customer/Services';
+import CustQuote       from './pages/customer/Quote';
+import CustNotifications from './pages/customer/Notifications';
 
 // Admin
 import AdminDash        from './pages/admin/Dashboard';
@@ -48,6 +52,7 @@ import AdminProducts    from './pages/admin/Products';
 import AdminServices    from './pages/admin/Services';
 import AdminOrders      from './pages/admin/Orders';
 import AdminOrderDetail from './pages/admin/OrderDetail';
+import AdminOrderNew    from './pages/admin/OrderNew';
 import AdminCustomers   from './pages/admin/Customers';
 import AdminTickets     from './pages/admin/Tickets';
 import AdminReports     from './pages/admin/Reports';
@@ -65,11 +70,24 @@ import AdminNotifications from './pages/admin/Notifications';
 import AdminProfile     from './pages/admin/Profile';
 import AdminPayments    from './pages/admin/Payments';
 import AdminPages       from './pages/admin/Pages';
+import AdminExport      from './pages/admin/Export';
+import AdminRoles       from './pages/admin/Roles';
+import AdminChangelog   from './pages/admin/Changelog';
+import AdminEmails      from './pages/admin/Emails';
+import AdminBanners     from './pages/admin/Banners';
+import AdminTasks       from './pages/admin/Tasks';
 
 // Staff
-import StaffTasks    from './pages/staff/Tasks';
-import StaffTickets  from './pages/staff/Tickets';
-import StaffMessages from './pages/staff/Messages';
+import StaffTasks         from './pages/staff/Tasks';
+import StaffTickets       from './pages/staff/Tickets';
+import StaffMessages      from './pages/staff/Messages';
+import StaffOrders        from './pages/staff/Orders';
+import StaffProducts      from './pages/staff/Products';
+import StaffCustomers     from './pages/staff/Customers';
+import StaffSales         from './pages/staff/Sales';
+import StaffNotifications from './pages/staff/Notifications';
+import StaffProfile       from './pages/staff/Profile';
+import StaffSchedule      from './pages/staff/Schedule';
 
 // POS
 import POS from './pages/pos/index';
@@ -95,54 +113,54 @@ function Loader() {
 export default function App() {
   useAnalytics();
   const [ready, setReady] = useState(false);
-  const setToken = useAuthStore((s) => s.setToken);
-  const setUser  = useAuthStore((s) => s.setUser);
+  const setToken = useAuthStore(s => s.setToken);
+  const setUser  = useAuthStore(s => s.setUser);
 
   useEffect(() => {
     (async () => {
       try {
-        const res = await api.post<{ data: { token: string; user: any } }>(
-          '/auth/refresh', undefined, { skipAuth: true }
-        );
+        const res = await api.post<{ data: { token: string; user: any } }>('/auth/refresh', undefined, { skipAuth: true });
         setToken(res.data.token); setUser(res.data.user);
-      } catch { /**/ } finally { setReady(true); }
+      } catch { } finally { setReady(true); }
     })();
   }, [setToken, setUser]);
 
   if (!ready) return <Loader />;
 
-  const ADMIN  = ['admin','manager'];
-  const STAFF  = ['admin','manager','seller','staff'];
+  const ADMIN = ['admin', 'manager'];
+  const STAFF = ['admin', 'manager', 'seller', 'staff'];
 
   return (
     <Routes>
-      {/* Public */}
+      {/* ── Public ──────────────────────────────────────────────── */}
       <Route element={<PublicLayout />}>
-        <Route path="/"               element={<Home />} />
-        <Route path="/products"       element={<PubProducts />} />
-        <Route path="/products/:slug" element={<ProductDetail />} />
-        <Route path="/services"       element={<PubServices />} />
-        <Route path="/blog"           element={<BlogIndex />} />
-        <Route path="/blog/:slug"     element={<BlogPost />} />
-        <Route path="/contact"        element={<Contact />} />
-        <Route path="/api-docs"       element={<ApiDocs />} />
-        <Route path="/quote"          element={<PubQuote />} />
-        <Route path="/maintenance"    element={<Maintenance />} />
-        <Route path="/p/:slug"        element={<CmsPage />} />
-        <Route path="/500"            element={<ErrorPage code={500} message="Erro do servidor" />} />
-        <Route path="/403"            element={<ErrorPage code={403} message="Acesso negado" />} />
+        <Route path="/"                element={<Home />} />
+        <Route path="/products"        element={<PubProducts />} />
+        <Route path="/products/:slug"  element={<ProductDetail />} />
+        <Route path="/services"        element={<PubServices />} />
+        <Route path="/services/:slug"  element={<ServiceDetail />} />
+        <Route path="/blog"            element={<BlogIndex />} />
+        <Route path="/blog/:slug"      element={<BlogPost />} />
+        <Route path="/contact"         element={<Contact />} />
+        <Route path="/api-docs"        element={<ApiDocs />} />
+        <Route path="/quote"           element={<PubQuote />} />
+        <Route path="/maintenance"     element={<Maintenance />} />
+        <Route path="/p/:slug"         element={<CmsPage />} />
+        <Route path="/500"             element={<ErrorPage code={500} message="Erro do servidor" />} />
+        <Route path="/403"             element={<ErrorPage code={403} message="Acesso negado" />} />
       </Route>
 
-      {/* Auth */}
+      {/* ── Auth ────────────────────────────────────────────────── */}
       <Route element={<AuthLayout />}>
         <Route path="/login"    element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>
 
-      {/* Customer */}
+      {/* ── Customer ────────────────────────────────────────────── */}
       <Route element={<RequireAuth><CustomerLayout /></RequireAuth>}>
         <Route path="/dashboard"          element={<Dashboard />} />
         <Route path="/orders"             element={<Orders />} />
+        <Route path="/orders/new"         element={<OrderNew />} />
         <Route path="/orders/:id"         element={<OrderDetail />} />
         <Route path="/invoices"           element={<Invoices />} />
         <Route path="/tickets"            element={<Tickets />} />
@@ -151,14 +169,16 @@ export default function App() {
         <Route path="/payments"           element={<CustPayments />} />
         <Route path="/my-services"        element={<CustServices />} />
         <Route path="/quote"              element={<CustQuote />} />
+        <Route path="/notifications"      element={<CustNotifications />} />
       </Route>
 
-      {/* Admin */}
+      {/* ── Admin ───────────────────────────────────────────────── */}
       <Route element={<RequireAuth roles={ADMIN}><AdminLayout /></RequireAuth>}>
         <Route path="/admin"                  element={<AdminDash />} />
         <Route path="/admin/products"         element={<AdminProducts />} />
         <Route path="/admin/services"         element={<AdminServices />} />
         <Route path="/admin/orders"           element={<AdminOrders />} />
+        <Route path="/admin/orders/new"       element={<AdminOrderNew />} />
         <Route path="/admin/orders/:id"       element={<AdminOrderDetail />} />
         <Route path="/admin/customers"        element={<AdminCustomers />} />
         <Route path="/admin/tickets"          element={<AdminTickets />} />
@@ -177,16 +197,29 @@ export default function App() {
         <Route path="/admin/profile"          element={<AdminProfile />} />
         <Route path="/admin/payments"         element={<AdminPayments />} />
         <Route path="/admin/pages"            element={<AdminPages />} />
+        <Route path="/admin/export"           element={<AdminExport />} />
+        <Route path="/admin/roles"            element={<AdminRoles />} />
+        <Route path="/admin/changelog"        element={<AdminChangelog />} />
+        <Route path="/admin/emails"           element={<AdminEmails />} />
+        <Route path="/admin/banners"          element={<AdminBanners />} />
+        <Route path="/admin/tasks"            element={<AdminTasks />} />
       </Route>
 
-      {/* Staff */}
+      {/* ── Staff ───────────────────────────────────────────────── */}
       <Route element={<RequireAuth roles={STAFF}><StaffLayout /></RequireAuth>}>
-        <Route path="/staff"          element={<StaffTasks />} />
-        <Route path="/staff/tickets"  element={<StaffTickets />} />
-        <Route path="/staff/messages" element={<StaffMessages />} />
+        <Route path="/staff"                  element={<StaffTasks />} />
+        <Route path="/staff/schedule"         element={<StaffSchedule />} />
+        <Route path="/staff/tickets"          element={<StaffTickets />} />
+        <Route path="/staff/messages"         element={<StaffMessages />} />
+        <Route path="/staff/orders"           element={<StaffOrders />} />
+        <Route path="/staff/products"         element={<StaffProducts />} />
+        <Route path="/staff/customers"        element={<StaffCustomers />} />
+        <Route path="/staff/sales"            element={<StaffSales />} />
+        <Route path="/staff/notifications"    element={<StaffNotifications />} />
+        <Route path="/staff/profile"          element={<StaffProfile />} />
       </Route>
 
-      {/* POS */}
+      {/* ── POS ─────────────────────────────────────────────────── */}
       <Route element={<RequireAuth roles={STAFF}><PosLayout /></RequireAuth>}>
         <Route path="/pos" element={<POS />} />
       </Route>

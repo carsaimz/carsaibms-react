@@ -393,3 +393,18 @@ CREATE TABLE IF NOT EXISTS push_tokens (
   UNIQUE KEY uq_user_token (user_id, token),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ── Banners ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS banners (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  title      VARCHAR(180) NOT NULL,
+  subtitle   VARCHAR(255) NULL,
+  image_url  VARCHAR(255) NOT NULL,
+  link_url   VARCHAR(255) NULL,
+  sort_order INT NOT NULL DEFAULT 0,
+  is_active  TINYINT(1) NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT IGNORE INTO banners (id,title,subtitle,image_url,link_url,sort_order,is_active) VALUES
+  (1,'Bem-vindo ao Carsai BMS','Gestão empresarial para Moçambique','/icon-512.png','/',1,1);

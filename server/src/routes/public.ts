@@ -101,6 +101,23 @@ router.get('/services', asyncHandler(async (req, res) => {
   });
 }));
 
+
+// ── GET /api/services/:slug ─────────────────────────────────────────────────
+router.get('/services/:slug', asyncHandler(async (req, res) => {
+  const s = await queryOne<any>(
+    `SELECT s.*, c.name cat_name FROM services s
+     LEFT JOIN categories c ON c.id=s.category_id
+     WHERE s.is_active=1 AND (s.id=? OR s.slug=?)`,
+    [Number(req.params.slug) || 0, req.params.slug]
+  );
+  if (!s) throw new ApiError('Serviço não encontrado.', 404);
+  res.json({ success: true, data: {
+    id: s.id, sname: s.name, slug: s.slug, description: s.description,
+    price: s.price_cents / 100, duration: s.duration_min, image: s.image,
+    category: s.cat_name ? { id: s.category_id, name: s.cat_name } : null,
+  }});
+}));
+
 // ── GET /api/categories ─────────────────────────────────────────────────────
 router.get('/categories', asyncHandler(async (_req, res) => {
   const rows = await query<any>('SELECT * FROM categories ORDER BY sort_order, name');

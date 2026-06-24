@@ -154,6 +154,44 @@ router.get('/orders/:id', asyncHandler(async (req: AuthedRequest, res) => {
   });
 }));
 
+
+// ── POST /api/customer/orders — create new order ────────────────────────────
+const createOrderSchema = z.object({
+  items: z.array(z.object({
+    product_id: z.number().int().positive(),
+    name: z.string(),
+    qty: z.number().positive(),
+    unit_price: z.number().min(0),
+  })).min(1),
+  payment_method: z.string().optional(),
+  delivery_address: z.string().nullable().optional(),
+  notes: z.string().nullable().optional(),
+});
+
+router.post('/orders', asyncHandler(async (req: AuthedRequest, res) => {
+  const data = createOrderSchema.parse(req.body);
+  const customerId = await getCustomerId(req.user!.uid);
+
+  const subtotalCents = data.items.reduce((s, i) => s + Math.round(i.unit_price * 100) * i.qty, 0);
+  const orderNum = 'ORD-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-6);
+
+  const orderId = await insert(
+    `INSERT INTO orders (order_number,customer_id,status,payment_status,payment_method,subtotal_cents,total_cents,currency,delivery_address,notes,source)
+     VALUES (?,?,'pending','unpaid',?,?,?,'MZN',?,?,'web')`,
+    [orderNum, customerId, data.payment_method||'', subtotalCents, subtotalCents, data.delivery_address||null, data.notes||null]
+  );
+
+  for (const item of data.items) {
+    const totalCents = Math.round(item.unit_price * 100) * item.qty;
+    await insert(
+      'INSERT INTO order_items (order_id,product_id,name,quantity,unit_price_cents,total_cents) VALUES (?,?,?,?,?,?)',
+      [orderId, item.product_id, item.name, item.qty, Math.round(item.unit_price * 100), totalCents]
+    );
+  }
+
+  res.status(201).json({ success: true, data: { id: orderId, order_number: orderNum } });
+}));
+
 // ── GET /api/customer/tickets ────────────────────────────────────────────────
 router.get('/tickets', asyncHandler(async (req: AuthedRequest, res) => {
   const customerId = await getCustomerId(req.user!.uid);
@@ -202,6 +240,44 @@ router.post('/tickets', asyncHandler(async (req: AuthedRequest, res) => {
   );
 
   res.status(201).json({ success: true, data: { id: ticketId, ticket_number: ticketNumber, status: 'open' } });
+}));
+
+
+// ── POST /api/customer/orders — create new order ────────────────────────────
+const createOrderSchema = z.object({
+  items: z.array(z.object({
+    product_id: z.number().int().positive(),
+    name: z.string(),
+    qty: z.number().positive(),
+    unit_price: z.number().min(0),
+  })).min(1),
+  payment_method: z.string().optional(),
+  delivery_address: z.string().nullable().optional(),
+  notes: z.string().nullable().optional(),
+});
+
+router.post('/orders', asyncHandler(async (req: AuthedRequest, res) => {
+  const data = createOrderSchema.parse(req.body);
+  const customerId = await getCustomerId(req.user!.uid);
+
+  const subtotalCents = data.items.reduce((s, i) => s + Math.round(i.unit_price * 100) * i.qty, 0);
+  const orderNum = 'ORD-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-6);
+
+  const orderId = await insert(
+    `INSERT INTO orders (order_number,customer_id,status,payment_status,payment_method,subtotal_cents,total_cents,currency,delivery_address,notes,source)
+     VALUES (?,?,'pending','unpaid',?,?,?,'MZN',?,?,'web')`,
+    [orderNum, customerId, data.payment_method||'', subtotalCents, subtotalCents, data.delivery_address||null, data.notes||null]
+  );
+
+  for (const item of data.items) {
+    const totalCents = Math.round(item.unit_price * 100) * item.qty;
+    await insert(
+      'INSERT INTO order_items (order_id,product_id,name,quantity,unit_price_cents,total_cents) VALUES (?,?,?,?,?,?)',
+      [orderId, item.product_id, item.name, item.qty, Math.round(item.unit_price * 100), totalCents]
+    );
+  }
+
+  res.status(201).json({ success: true, data: { id: orderId, order_number: orderNum } });
 }));
 
 // ── GET /api/customer/tickets/:id ─────────────────────────────────────────────

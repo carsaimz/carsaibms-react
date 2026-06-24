@@ -11,6 +11,8 @@ import adminRoutes   from './routes/admin.js';
 import blogRoutes    from './routes/blog.js';
 import staffRoutes   from './routes/staff.js';
 import extrasRoutes  from './routes/extras.js';
+import seoRoutes         from './routes/seo.js';
+import adminExtrasRoutes from './routes/admin_extras.js';
 import { notFoundHandler, errorHandler } from './middleware/error.js';
 
 dotenv.config();
