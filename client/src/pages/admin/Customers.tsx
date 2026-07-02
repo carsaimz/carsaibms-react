@@ -8,8 +8,10 @@ import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import Avatar from '../../components/shared/Avatar';
 import { formatDate } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminCustomers() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
 

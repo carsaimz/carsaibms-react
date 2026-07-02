@@ -8,8 +8,10 @@ import Button from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import Spinner from '../../components/ui/Spinner';
 import { formatMoney } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminServices() {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState<any>(null);
   const [form, setForm] = useState({ name:'', price:0, duration:60, description:'', is_active:true });

@@ -8,8 +8,10 @@ import { Input } from '../../components/ui/Input';
 import Badge from '../../components/ui/Badge';
 import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminBanners() {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ title: '', subtitle: '', image_url: '', link_url: '', is_active: true });
   const [saving, setSaving] = useState(false);

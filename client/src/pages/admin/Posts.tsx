@@ -8,8 +8,10 @@ import Button from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import Spinner from '../../components/ui/Spinner';
 import { formatDate } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminPosts() {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState<any>(null);
   const [form, setForm] = useState({ title:'', excerpt:'', body:'', is_published:false });

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Package, Wallet, LifeBuoy, Bell, ArrowRight } from 'lucide-react';
 import { api } from '../../lib/api';
+import { useTranslation } from 'react-i18next';
 import { Card, CardBody, CardHeader, CardTitle } from '../../components/ui/Card';
 import Badge, { statusVariant } from '../../components/ui/Badge';
 import Spinner from '../../components/ui/Spinner';
@@ -26,6 +27,7 @@ interface DashboardData {
 }
 
 export default function Dashboard() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ['dashboard'],
     queryFn: () => api.get<{ data: DashboardData }>('/customer/dashboard').then((r) => r.data),
@@ -35,10 +37,10 @@ export default function Dashboard() {
   if (!data) return null;
 
   const stats = [
-    { label: 'Total de pedidos', value: data.total_orders, icon: Package, color: 'text-primary-600 bg-primary-50 dark:bg-primary-600/10' },
-    { label: 'Valor em dívida', value: formatMoney(data.amount_due), icon: Wallet, color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/20' },
-    { label: 'Tickets abertos', value: data.open_tickets, icon: LifeBuoy, color: 'text-blue-600 bg-blue-50 dark:bg-blue-900/20' },
-    { label: 'Notificações', value: data.unread_notifications, icon: Bell, color: 'text-green-600 bg-green-50 dark:bg-green-900/20' },
+    { label: t('dash_orders'), value: data.total_orders, icon: Package, color: 'text-primary-600 bg-primary-50 dark:bg-primary-600/10' },
+    { label: t('dash_due'), value: formatMoney(data.amount_due), icon: Wallet, color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/20' },
+    { label: t('dash_tickets'), value: data.open_tickets, icon: LifeBuoy, color: 'text-blue-600 bg-blue-50 dark:bg-blue-900/20' },
+    { label: t('dash_notifs'), value: data.unread_notifications, icon: Bell, color: 'text-green-600 bg-green-50 dark:bg-green-900/20' },
   ];
 
   return (

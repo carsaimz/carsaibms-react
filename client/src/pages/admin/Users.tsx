@@ -9,10 +9,12 @@ import { Input } from '../../components/ui/Input';
 import Spinner from '../../components/ui/Spinner';
 import Avatar from '../../components/shared/Avatar';
 import { formatDate } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 const ROLES = ['admin','manager','seller','staff','customer'];
 
 export default function AdminUsers() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [showForm, setShowForm] = useState(false);

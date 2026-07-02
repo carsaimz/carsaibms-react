@@ -6,8 +6,10 @@ import Badge, { statusVariant } from '../../components/ui/Badge';
 import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import { formatMoney, formatDateTime, statusLabel } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminPayments() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ['admin-payments'],
     queryFn: () => api.get<{ data: any[] }>('/admin/payments'),

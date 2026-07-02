@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Package, Zap, Shield, Smartphone } from 'lucide-react';
 import { api } from '../../lib/api';
 import { formatMoney } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
+  const { t } = useTranslation();
   const { data: products } = useQuery({
     queryKey: ['pub-products-featured'],
     queryFn: () => api.get<{ data: any[] }>('/products?featured=1&per_page=6'),

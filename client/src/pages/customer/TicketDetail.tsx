@@ -8,6 +8,7 @@ import Badge, { statusVariant } from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
 import Spinner from '../../components/ui/Spinner';
 import { formatDateTime, statusLabel } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 interface Message {
   id: number;
@@ -28,6 +29,7 @@ interface TicketData {
 }
 
 export default function TicketDetail() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const [reply, setReply] = useState('');
   const queryClient = useQueryClient();

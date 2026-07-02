@@ -6,8 +6,10 @@ import { Card, CardBody } from '../../components/ui/Card';
 import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import Avatar from '../../components/shared/Avatar';
+import { useTranslation } from 'react-i18next';
 
 export default function StaffCustomers() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const { data, isLoading } = useQuery({
     queryKey: ['staff-customers', search],

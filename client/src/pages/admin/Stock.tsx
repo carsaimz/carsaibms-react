@@ -7,8 +7,10 @@ import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import Spinner from '../../components/ui/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminStock() {
+  const { t } = useTranslation();
   const [adjustId, setAdjustId] = useState<number|null>(null);
   const [qty, setQty] = useState('');
   const [type, setType] = useState<'add'|'subtract'|'set'>('add');

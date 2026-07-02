@@ -8,6 +8,7 @@ import EmptyState from '../../components/ui/EmptyState';
 import { formatMoney, formatDateTime, statusLabel } from '../../lib/format';
 
 export default function CustomerPayments() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ['customer-payments'],
     queryFn: () => api.get<{ data: any[] }>('/customer/payments'),

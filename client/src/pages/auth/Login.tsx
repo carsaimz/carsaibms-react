@@ -5,6 +5,7 @@ import { useAuthStore } from '../../store/auth';
 import { Input } from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
 import { isNative } from '../../lib/native/capacitor';
+import { useTranslation } from 'react-i18next';
 import { signInWithGoogleNative, setAnalyticsUserId, crashlyticsSetUser, logEvent } from '../../lib/native/firebase-native';
 
 export default function Login() {
@@ -12,6 +13,7 @@ export default function Login() {
   const setToken = useAuthStore((s) => s.setToken);
   const setUser = useAuthStore((s) => s.setUser);
 
+  const { t } = useTranslation();
   const [email, setEmail] = useState('cliente@carsai.co.mz');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -74,10 +76,10 @@ export default function Login() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <h2 className="text-lg font-bold">Entrar na conta</h2>
+      <h2 className="text-lg font-bold">{t('auth_login')}</h2>
 
       <Input
-        label="Email"
+        label={t('auth_email')}
         type="email"
         name="email"
         autoComplete="email"
@@ -86,7 +88,7 @@ export default function Login() {
         required
       />
       <Input
-        label="Senha"
+        label={t('auth_password')}
         type="password"
         name="password"
         autoComplete="current-password"
@@ -121,7 +123,7 @@ export default function Login() {
       )}
 
       <p className="text-center text-sm text-gray-500 dark:text-slate-400">
-        Não tem conta?{' '}
+        {t('auth_no_account')}{' '}
         <Link to="/register" className="font-semibold text-primary-600 hover:underline">
           Registar
         </Link>

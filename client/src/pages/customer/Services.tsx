@@ -8,6 +8,7 @@ import EmptyState from '../../components/ui/EmptyState';
 import { formatMoney } from '../../lib/format';
 
 export default function CustomerServices() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ['customer-services'],
     queryFn: () => api.get<{ data: any[] }>('/services?per_page=50'),

@@ -6,6 +6,7 @@ import { Card, CardBody, CardHeader, CardTitle } from '../../components/ui/Card'
 import { Input } from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
 import Spinner from '../../components/ui/Spinner';
+import { useTranslation } from 'react-i18next';
 
 const SETTINGS_FIELDS = [
   { group: 'Empresa', fields: [
@@ -49,6 +50,7 @@ const SETTINGS_FIELDS = [
 ];
 
 export default function AdminSettings() {
+  const { t } = useTranslation();
   const [values, setValues] = useState<Record<string, string>>({});
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);

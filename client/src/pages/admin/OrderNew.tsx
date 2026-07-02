@@ -8,10 +8,12 @@ import Button from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import Spinner from '../../components/ui/Spinner';
 import { formatMoney } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 interface Item { id: number; name: string; price: number; qty: number; }
 
 export default function AdminOrderNew() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [customerSearch, setCustomerSearch] = useState('');

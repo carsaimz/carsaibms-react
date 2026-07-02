@@ -8,8 +8,10 @@ import Badge, { statusVariant } from '../../components/ui/Badge';
 import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import { formatMoney, formatDateTime, statusLabel } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function StaffOrders() {
+  const { t } = useTranslation();
   const [page, setPage] = useState(1);
   const { data, isLoading } = useQuery({
     queryKey: ['staff-orders', page],

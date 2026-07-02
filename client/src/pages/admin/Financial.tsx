@@ -4,8 +4,10 @@ import { api } from '../../lib/api';
 import { Card, CardBody, CardHeader, CardTitle } from '../../components/ui/Card';
 import Spinner from '../../components/ui/Spinner';
 import { formatMoney, formatDate } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminFinancial() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ['admin-financial'],
     queryFn: () => api.get<{ data: any }>('/admin/financial').then(r => r.data),

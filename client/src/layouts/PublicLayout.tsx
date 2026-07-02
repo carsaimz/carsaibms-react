@@ -2,20 +2,23 @@ import { useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { Menu, X, Code } from 'lucide-react';
 import { useAuthStore } from '../store/auth';
+import LangSwitcher from '../components/shared/LangSwitcher';
+import { useTranslation } from 'react-i18next';
 
 const links = [
-  { to: '/',          label: 'Início',   end: true },
-  { to: '/products',  label: 'Produtos'  },
-  { to: '/services',  label: 'Serviços'  },
-  { to: '/blog',      label: 'Blog'      },
-  { to: '/api-docs',  label: 'API'       },
-  { to: '/contact',   label: 'Contacto'  },
+  { to: '/',          label: t('nav_home'), end: true },
+  { to: '/products',  label: t('nav_products') },
+  { to: '/services',  label: t('nav_services') },
+  { to: '/blog',      label: t('nav_blog') },
+  { to: '/api-docs',  label: t('nav_api') },
+  { to: '/contact',   label: t('nav_contact') },
 ];
 
 export default function PublicLayout() {
   const [open, setOpen] = useState(false);
   const user = useAuthStore((s) => s.user);
   const isAuth = useAuthStore((s) => s.isAuthenticated());
+  const { t } = useTranslation();
 
   return (
     <div className="flex min-h-screen flex-col bg-white dark:bg-slate-950">
@@ -106,7 +109,7 @@ export default function PublicLayout() {
             </div>
             <div>
               <p className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-400">Conta</p>
-              {[['/login', 'Entrar'], ['/register', 'Criar conta'], ['/', 'Portal do Cliente'], ['/admin', 'Painel Admin']].map(([to, label]) => (
+              {[['/login', t('nav_login')], ['/register', t('nav_register')], ['/', 'Portal do Cliente'], ['/admin', 'Painel Admin']].map(([to, label]) => (
                 <Link key={to} to={to} className="block py-1 text-sm text-gray-500 hover:text-primary-600 dark:text-slate-400">{label}</Link>
               ))}
             </div>

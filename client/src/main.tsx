@@ -10,6 +10,7 @@ import { isNative } from './lib/native/capacitor';
 import { initAppListeners, hideSplash } from './lib/native/app';
 import { initPushNotifications } from './lib/native/push';
 import { initFirebase } from './lib/firebase';
+import './lib/i18n'; // i18next — must import before App renders
 import { recordError, fetchRemoteConfig } from './lib/native/firebase-native';
 
 const queryClient = new QueryClient({

@@ -9,6 +9,7 @@ import Button from '../../components/ui/Button';
 import Spinner from '../../components/ui/Spinner';
 import { formatMoney, formatDateTime, statusLabel } from '../../lib/format';
 import { downloadInvoicePdf } from '../../lib/invoice';
+import { useTranslation } from 'react-i18next';
 
 interface OrderItem {
   id: number;
@@ -56,6 +57,7 @@ const gateways = [
 ];
 
 export default function OrderDetail() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const [paying, setPaying] = useState<string | null>(null);
   const [payMessage, setPayMessage] = useState<string | null>(null);

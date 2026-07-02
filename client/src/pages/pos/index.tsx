@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Search, Plus, Minus, Trash2, CreditCard, Printer, ShoppingBag, X, CheckCircle, ScanLine } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { scanBarcode } from '../../lib/native/barcode';
 import { isNative } from '../../lib/native/capacitor';
 import { api, ApiClientError } from '../../lib/api';
@@ -24,6 +25,7 @@ const METHODS = [
 ];
 
 export default function POS() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [cart, setCart] = useState<CartItem[]>([]);
   const [method, setMethod] = useState('cash');
@@ -164,14 +166,14 @@ export default function POS() {
           <div className="relative flex-1">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
             <input ref={searchRef} value={search} onChange={(e) => setSearch(e.target.value)}
-              placeholder="Pesquisar produto, SKU ou código de barras..."
+              placeholder={t('pos_search')}
               className="w-full rounded-xl border border-gray-200 py-2.5 pl-10 pr-4 text-sm outline-none focus:border-primary-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
               autoFocus />
           </div>
           <button onClick={handleScan}
             className="flex items-center gap-1.5 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-bold text-white hover:bg-slate-700 transition-colors dark:bg-primary-600 dark:hover:bg-primary-700">
             <ScanLine className="h-4 w-4" />
-            <span className="hidden sm:inline">{isNative ? 'Scan' : 'Código'}</span>
+            <span className="hidden sm:inline">{isNative ? t('pos_scan') : t('pos_code')}</span>
           </button>
         </div>
 

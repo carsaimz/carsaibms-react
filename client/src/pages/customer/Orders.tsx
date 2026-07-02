@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Package, ChevronRight } from 'lucide-react';
@@ -28,6 +29,7 @@ const statusFilters = [
 ];
 
 export default function Orders() {
+  const { t } = useTranslation();
   const [status, setStatus] = useState('');
   const [page, setPage] = useState(1);
 

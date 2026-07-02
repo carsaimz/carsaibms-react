@@ -37,6 +37,19 @@ const statusLabels: Record<string, string> = {
   high: 'Alta',
 };
 
+
+/**
+ * Translate a status string.
+ * Falls back to i18next if available, otherwise uses the static map.
+ */
 export function statusLabel(status: string): string {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const i18n = require('i18next').default;
+    const key = `status_${status}`;
+    const translated = i18n.t(key);
+    if (translated !== key) return translated;
+  } catch { /* i18n not yet initialised — use fallback */ }
   return statusLabels[status] || status;
 }
+

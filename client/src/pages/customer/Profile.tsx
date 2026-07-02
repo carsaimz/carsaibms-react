@@ -6,6 +6,7 @@ import { Card, CardBody, CardHeader, CardTitle } from '../../components/ui/Card'
 import { Input } from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
 import Spinner from '../../components/ui/Spinner';
+import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../store/auth';
 
 interface ProfileData {
@@ -21,6 +22,7 @@ interface ProfileData {
 }
 
 export default function Profile() {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const setUser = useAuthStore((s) => s.setUser);
   const authUser = useAuthStore((s) => s.user);
@@ -79,11 +81,11 @@ export default function Profile() {
             <Input label="Nome" value={form.name || ''} onChange={(e) => update('name', e.target.value)} required />
             <Input label="Email" value={form.email || ''} disabled />
             <Input label="Telemóvel" value={form.phone || ''} onChange={(e) => update('phone', e.target.value)} placeholder="258840000000" />
-            <Input label="Empresa" value={form.company || ''} onChange={(e) => update('company', e.target.value)} />
-            <Input label="NUIT" value={form.nuit || ''} onChange={(e) => update('nuit', e.target.value)} />
-            <Input label="Cidade" value={form.city || ''} onChange={(e) => update('city', e.target.value)} />
+            <Input label={t('profile_company')} value={form.company || ''} onChange={(e) => update('company', e.target.value)} />
+            <Input label={t('profile_nuit')} value={form.nuit || ''} onChange={(e) => update('nuit', e.target.value)} />
+            <Input label={t('profile_city')} value={form.city || ''} onChange={(e) => update('city', e.target.value)} />
             <div className="sm:col-span-2">
-              <Input label="Morada" value={form.address || ''} onChange={(e) => update('address', e.target.value)} />
+              <Input label={t('profile_address')} value={form.address || ''} onChange={(e) => update('address', e.target.value)} />
             </div>
 
             <div className="sm:col-span-2 flex items-center gap-3">
@@ -128,14 +130,14 @@ function ChangePasswordCard() {
 
   return (
     <Card>
-      <CardHeader><CardTitle>Alterar Senha</CardTitle></CardHeader>
+      <CardHeader><CardTitle>{t('profile_change')}</CardTitle></CardHeader>
       <CardBody>
         <form
           onSubmit={(e) => { e.preventDefault(); changePassword.mutate(); }}
           className="grid grid-cols-1 gap-4 sm:grid-cols-2"
         >
-          <Input label="Senha actual" type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required />
-          <Input label="Nova senha" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required minLength={6} />
+          <Input label={t('profile_current_pwd')} type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required />
+          <Input label={t('profile_new_pwd')} type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required minLength={6} />
           <div className="sm:col-span-2 flex items-center gap-3">
             <Button type="submit" variant="secondary" icon={<KeyRound className="h-4 w-4" />} loading={changePassword.isPending}>
               Alterar Senha

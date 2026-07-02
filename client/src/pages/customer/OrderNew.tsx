@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Plus, Minus, Trash2, ShoppingCart, Search } from 'lucide-react';
@@ -11,6 +12,7 @@ import { formatMoney } from '../../lib/format';
 interface Item { id: number; name: string; price: number; qty: number; unit: string; }
 
 export default function CustomerOrderNew() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [items, setItems] = useState<Item[]>([]);

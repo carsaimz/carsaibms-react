@@ -7,8 +7,10 @@ import Button from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import Spinner from '../../components/ui/Spinner';
 import { formatDateTime } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminNotifications() {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ title:'', body:'', user_id:'' });
   const [saving, setSaving] = useState(false);

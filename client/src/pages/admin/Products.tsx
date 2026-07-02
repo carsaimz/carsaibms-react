@@ -8,6 +8,7 @@ import Button from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import Spinner from '../../components/ui/Spinner';
 import { formatMoney } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 interface Product {
   id: number; sku: string; barcode?: string; name: string; slug: string;
@@ -16,6 +17,7 @@ interface Product {
 }
 
 export default function AdminProducts() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [showForm, setShowForm] = useState(false);

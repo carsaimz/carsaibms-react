@@ -3,8 +3,10 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { api, ApiClientError } from '../../lib/api';
 import { Input } from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
+import { useTranslation } from 'react-i18next';
 
 export default function Contact() {
+  const { t } = useTranslation();
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -70,10 +72,10 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div className="grid gap-4 sm:grid-cols-2">
                 <Input label="Nome" name="name" value={form.name} onChange={(e) => update('name', e.target.value)} required />
-                <Input label="Email" type="email" name="email" value={form.email} onChange={(e) => update('email', e.target.value)} required />
+                <Input label={t('contact_email')} type="email" name="email" value={form.email} onChange={(e) => update('email', e.target.value)} required />
               </div>
-              <Input label="Telefone (opcional)" name="phone" value={form.phone} onChange={(e) => update('phone', e.target.value)} placeholder="+258 84 000 0000" />
-              <Input label="Assunto" name="subject" value={form.subject} onChange={(e) => update('subject', e.target.value)} required />
+              <Input label={t('contact_phone')} name="phone" value={form.phone} onChange={(e) => update('phone', e.target.value)} placeholder="+258 84 000 0000" />
+              <Input label={t('contact_subject')} name="subject" value={form.subject} onChange={(e) => update('subject', e.target.value)} required />
               <div className="flex flex-col gap-1">
                 <label className="text-sm font-medium text-gray-700 dark:text-slate-300">Mensagem</label>
                 <textarea name="message" rows={5} value={form.message} onChange={(e) => update('message', e.target.value)}

@@ -5,8 +5,10 @@ import { Card, CardBody } from '../../components/ui/Card';
 import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import { formatMoney, formatDateTime } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function StaffSales() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ['staff-sales'],
     queryFn: () => api.get<{ data: any[] }>('/staff/sales?per_page=50'),

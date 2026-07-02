@@ -41,7 +41,10 @@
     "@capacitor-firebase/crashlytics": "^6.1.0",
     "@capacitor-firebase/remote-config": "^6.1.0",
     "@capacitor-firebase/firestore": "^6.1.0",
-    "@capacitor/storage": "^1.2.5"
+    "@capacitor/storage": "^1.2.5",
+    "i18next": "^23.11.5",
+    "react-i18next": "^14.1.2",
+    "i18next-browser-languagedetector": "^8.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

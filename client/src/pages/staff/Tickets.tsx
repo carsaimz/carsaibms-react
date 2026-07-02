@@ -8,8 +8,10 @@ import Button from '../../components/ui/Button';
 import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import { formatDateTime, statusLabel } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function StaffTickets() {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState<any | null>(null);
   const [reply, setReply] = useState('');
   const qc = useQueryClient();

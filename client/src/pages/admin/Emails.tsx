@@ -4,6 +4,7 @@ import { api, ApiClientError } from '../../lib/api';
 import { Card, CardBody, CardHeader, CardTitle } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
+import { useTranslation } from 'react-i18next';
 
 const TEMPLATES = [
   { key: 'order_confirmation', label: 'Confirmação de Pedido', vars: ['{{name}}', '{{order_number}}', '{{total}}'] },
@@ -13,6 +14,7 @@ const TEMPLATES = [
 ];
 
 export default function AdminEmails() {
+  const { t } = useTranslation();
   const [testEmail, setTestEmail] = useState('');
   const [loading, setLoading] = useState<string | null>(null);
   const [msg, setMsg] = useState('');

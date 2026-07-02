@@ -8,6 +8,7 @@ import { Input } from '../../components/ui/Input';
 import Badge from '../../components/ui/Badge';
 import Spinner from '../../components/ui/Spinner';
 import { formatDate } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 const PRIORITY_COLORS: Record<string, string> = {
   high: 'danger', medium: 'warning', low: 'default',
@@ -17,6 +18,7 @@ const PRIORITY_LABELS: Record<string, string> = {
 };
 
 export default function StaffTasks() {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle] = useState('');
   const [priority, setPriority] = useState('medium');

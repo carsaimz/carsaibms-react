@@ -3,8 +3,10 @@ import { Bell } from 'lucide-react';
 import { Card, CardBody } from '../../components/ui/Card';
 import EmptyState from '../../components/ui/EmptyState';
 import { formatDateTime } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function StaffNotifications() {
+  const { t } = useTranslation();
   const { notifications, unreadCount, markRead } = useNotifications();
 
   return (

@@ -8,6 +8,7 @@ import Badge, { statusVariant } from '../../components/ui/Badge';
 import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import { formatMoney, formatDateTime, statusLabel } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 const STATUS_FILTERS = [
   { value: '', label: 'Todos' },
@@ -26,6 +27,7 @@ const PAY_FILTERS = [
 ];
 
 export default function AdminOrders() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('');
   const [payStatus, setPayStatus] = useState('');

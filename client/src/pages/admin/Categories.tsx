@@ -7,8 +7,10 @@ import Button from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import Badge from '../../components/ui/Badge';
 import Spinner from '../../components/ui/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminCategories() {
+  const { t } = useTranslation();
   const [type, setType] = useState<'product'|'service'>('product');
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');

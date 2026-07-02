@@ -8,8 +8,10 @@ import { Input } from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
 import Avatar from '../../components/shared/Avatar';
 import Spinner from '../../components/ui/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminProfile() {
+  const { t } = useTranslation();
   const user = useAuthStore((s) => s.user);
   const setUser = useAuthStore((s) => s.setUser);
   const [form, setForm] = useState({ name: user?.name||'', phone: '' });

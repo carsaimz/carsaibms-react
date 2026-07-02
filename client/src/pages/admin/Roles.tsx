@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Shield } from 'lucide-react';
 import { Card, CardBody, CardHeader, CardTitle } from '../../components/ui/Card';
+import { useTranslation } from 'react-i18next';
 
 const ROLES = [
   { key: 'admin',    label: 'Administrador', color: 'text-red-600 bg-red-50', desc: 'Acesso total ao sistema.' },
@@ -19,6 +20,7 @@ const PERMISSIONS: Record<string, string[]> = {
 };
 
 export default function AdminRoles() {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState<string | null>(null);
 
   return (

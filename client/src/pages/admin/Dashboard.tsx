@@ -6,8 +6,10 @@ import { Card, CardBody, CardHeader, CardTitle } from '../../components/ui/Card'
 import Badge, { statusVariant } from '../../components/ui/Badge';
 import Spinner from '../../components/ui/Spinner';
 import { formatMoney, formatDateTime, statusLabel } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminDashboard() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ['admin-dashboard'],
     queryFn: () => api.get<{ data: any }>('/admin/dashboard').then((r) => r.data),

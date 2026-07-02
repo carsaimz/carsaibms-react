@@ -6,11 +6,13 @@ import Badge from '../../components/ui/Badge';
 import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import { formatDate } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 const PRIORITY_LABELS: Record<string, string> = { high: 'Alta', medium: 'Média', low: 'Baixa' };
 const PRIORITY_COLORS: Record<string, any> = { high: 'danger', medium: 'warning', low: 'default' };
 
 export default function AdminTasks() {
+  const { t } = useTranslation();
   const qc = useQueryClient();
   const { data, isLoading } = useQuery({
     queryKey: ['admin-tasks-all'],

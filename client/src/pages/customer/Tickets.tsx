@@ -11,6 +11,7 @@ import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import { formatDateTime, statusLabel } from '../../lib/format';
 import { queueAction } from '../../lib/db';
+import { useTranslation } from 'react-i18next';
 
 interface Ticket {
   id: number;
@@ -23,6 +24,7 @@ interface Ticket {
 }
 
 export default function Tickets() {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
@@ -79,7 +81,7 @@ export default function Tickets() {
                 <h3 className="text-sm font-bold">Novo Ticket</h3>
                 <button type="button" onClick={() => setShowForm(false)}><X className="h-4 w-4" /></button>
               </div>
-              <Input label="Assunto" value={subject} onChange={(e) => setSubject(e.target.value)} required minLength={3} />
+              <Input label={t('tickets_subject')} value={subject} onChange={(e) => setSubject(e.target.value)} required minLength={3} />
               <div className="flex flex-col gap-1">
                 <label className="text-sm font-medium text-gray-700 dark:text-slate-300">Mensagem</label>
                 <textarea
@@ -107,7 +109,7 @@ export default function Tickets() {
                   {createTicket.error instanceof ApiClientError ? createTicket.error.message : 'Erro ao criar ticket.'}
                 </p>
               )}
-              <Button type="submit" loading={createTicket.isPending}>Enviar</Button>
+              <Button type="submit" loading={createTicket.isPending}>{t('tickets_send')}</Button>
               {!navigator.onLine && (
                 <p className="text-xs text-amber-600">Está offline — o ticket será enviado quando a ligação for restabelecida.</p>
               )}

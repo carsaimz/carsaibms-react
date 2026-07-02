@@ -1,5 +1,6 @@
 import { Card, CardBody, CardHeader, CardTitle } from '../../components/ui/Card';
 import Badge from '../../components/ui/Badge';
+import { useTranslation } from 'react-i18next';
 
 const CHANGELOG = [
   { version: '1.0.0', date: 'Junho 2026', type: 'major', changes: [
@@ -25,6 +26,7 @@ const CHANGELOG = [
 const TYPE_COLORS: Record<string, any> = { major: 'success', minor: 'info', patch: 'default' };
 
 export default function AdminChangelog() {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-xl font-bold">Changelog</h1>

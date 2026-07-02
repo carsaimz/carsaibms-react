@@ -2,8 +2,10 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../lib/api';
 import Spinner from '../../components/ui/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function CmsPage() {
+  const { t } = useTranslation();
   const { slug } = useParams();
   const { data, isLoading } = useQuery({
     queryKey: ['cms-page', slug],
@@ -14,7 +16,7 @@ export default function CmsPage() {
   if (isLoading) return <div className="py-20"><Spinner /></div>;
   if (!data) return (
     <div className="mx-auto max-w-3xl px-4 py-16 text-center">
-      <h1 className="text-2xl font-black">Página não encontrada</h1>
+      <h1 className="text-2xl font-black">{t('not_found_title')}</h1>
     </div>
   );
 

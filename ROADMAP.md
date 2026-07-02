@@ -99,6 +99,7 @@ carsai-react/
 - [x] Scanner de código de barras (`@capacitor-mlkit/barcode-scanning`) — ML Kit offline, integrado no POS
 - [x] Campo `barcode` adicionado a produtos (separado do SKU) — pesquisável na API e no POS
 - [x] Firebase completo: Push (Web+Native), Auth (Google Sign-In nativo), Analytics (screen tracking automático), Crashlytics (erros), Remote Config (feature flags), Firestore (camada realtime opcional p/ tickets)
+- [x] i18n completo: PT + EN com 120+ chaves, troca instantânea sem reload, LangSwitcher em todos os layouts, aplicado em Dashboard, Login, POS, Perfil, Facturas, Tickets, Home, Contacto, Orçamento
 - [x] Endpoint `/api/auth/google` — troca ID token Firebase por JWT próprio, cria conta automaticamente se não existir
 - [x] Tabela `push_tokens` — multi-dispositivo por utilizador
 - [x] Push wired em: confirmação de pagamento, notificações admin

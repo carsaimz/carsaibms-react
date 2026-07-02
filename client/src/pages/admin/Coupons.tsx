@@ -9,8 +9,10 @@ import { Input } from '../../components/ui/Input';
 import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import { formatMoney, formatDate } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminCoupons() {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ code:'', type:'percent', value:10, min_order:0, max_uses:0, expires_at:'' });
   const [saving, setSaving] = useState(false);

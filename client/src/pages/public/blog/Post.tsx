@@ -4,8 +4,10 @@ import { ArrowLeft, Calendar, Eye } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { formatDate } from '../../../lib/format';
 import Spinner from '../../../components/ui/Spinner';
+import { useTranslation } from 'react-i18next';
 
 export default function BlogPost() {
+  const { t } = useTranslation();
   const { slug } = useParams();
   const { data, isLoading } = useQuery({
     queryKey: ['pub-post', slug],
@@ -14,7 +16,7 @@ export default function BlogPost() {
   });
 
   if (isLoading) return <div className="py-20"><Spinner /></div>;
-  if (!data) return <div className="py-20 text-center text-gray-400">Artigo não encontrado.</div>;
+  if (!data) return <div className="py-20 text-center text-gray-400">{t('not_found_title')}</div>;
   const post = data;
 
   return (

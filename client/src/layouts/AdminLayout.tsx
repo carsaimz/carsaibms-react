@@ -10,6 +10,7 @@ import { useAuthStore } from '../store/auth';
 import { api } from '../lib/api';
 import Avatar from '../components/shared/Avatar';
 import NotificationBell from '../components/shared/NotificationBell';
+import LangSwitcher from '../components/shared/LangSwitcher';
 import OfflineBanner from '../components/shared/OfflineBanner';
 
 const navGroups = [
@@ -124,6 +125,7 @@ export default function AdminLayout() {
             <button onClick={() => setOpen(true)} className="text-gray-500 md:hidden"><Menu className="h-5 w-5" /></button>
             <div className="hidden text-sm font-semibold text-gray-700 dark:text-slate-200 md:block">Painel Administrativo</div>
             <div className="flex items-center gap-2">
+              <LangSwitcher compact />
               <NotificationBell />
               <div className="h-5 w-px bg-gray-200 dark:bg-slate-700" />
               <NavLink to="/" className="rounded-lg px-2.5 py-1 text-xs font-semibold text-gray-500 hover:bg-gray-100 dark:text-slate-400 dark:hover:bg-slate-800">← Portal</NavLink>

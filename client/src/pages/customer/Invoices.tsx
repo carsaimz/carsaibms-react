@@ -8,6 +8,7 @@ import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import { formatMoney, formatDate, statusLabel } from '../../lib/format';
 import { downloadInvoicePdf } from '../../lib/invoice';
+import { useTranslation } from 'react-i18next';
 
 interface Order {
   id: number;
@@ -27,6 +28,7 @@ interface Order {
 }
 
 export default function Invoices() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ['orders', '', 1],
     queryFn: () => api.get<{ data: Order[] }>('/customer/orders?per_page=50'),
@@ -83,7 +85,7 @@ export default function Invoices() {
                       icon={<Download className="h-3.5 w-3.5" />}
                       onClick={() => downloadInvoicePdf(order)}
                     >
-                      <span className="hidden sm:inline">PDF</span>
+                      <span className="hidden sm:inline">{t('invoices_pdf')}</span>
                     </Button>
                   </div>
                 </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { FileQuestion, Send } from 'lucide-react';
 import { api, ApiClientError } from '../../lib/api';
@@ -8,6 +9,7 @@ import Button from '../../components/ui/Button';
 import Spinner from '../../components/ui/Spinner';
 
 export default function CustomerQuote() {
+  const { t } = useTranslation();
   const [form, setForm] = useState({ subject:'', items:'', notes:'' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);

@@ -8,11 +8,13 @@ import Button from '../../components/ui/Button';
 import Spinner from '../../components/ui/Spinner';
 import { formatMoney, formatDateTime, statusLabel } from '../../lib/format';
 import { downloadInvoicePdf } from '../../lib/invoice';
+import { useTranslation } from 'react-i18next';
 
 const ORDER_STATUSES = ['pending','confirmed','processing','shipped','delivered','cancelled','refunded'];
 const PAY_STATUSES   = ['unpaid','processing','paid','refunded','failed'];
 
 export default function AdminOrderDetail() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const qc = useQueryClient();
 

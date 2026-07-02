@@ -6,8 +6,10 @@ import { Card, CardBody } from '../../components/ui/Card';
 import Badge from '../../components/ui/Badge';
 import Spinner from '../../components/ui/Spinner';
 import { formatDateTime } from '../../lib/format';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminLogs() {
+  const { t } = useTranslation();
   const [page, setPage] = useState(1);
   const { data, isLoading } = useQuery({
     queryKey: ['admin-logs', page],

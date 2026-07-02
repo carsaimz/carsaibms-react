@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Code, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { Card, CardBody, CardHeader, CardTitle } from '../../components/ui/Card';
+import { useTranslation } from 'react-i18next';
 
 const BASE = typeof window !== 'undefined' ? window.location.origin + '/api' : '/api';
 
@@ -75,6 +76,7 @@ function Endpoint({ ep }: { ep: typeof ENDPOINTS[0] }) {
 }
 
 export default function ApiDocs() {
+  const { t } = useTranslation(); // API docs stay technical/English-first by convention
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 md:px-6">
       <div className="mb-8 flex items-start justify-between flex-wrap gap-4">

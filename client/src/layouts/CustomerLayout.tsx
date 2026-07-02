@@ -9,6 +9,7 @@ import { useFlushQueue } from '../hooks/useFlushQueue';
 import NotificationBell from '../components/shared/NotificationBell';
 import OfflineBanner from '../components/shared/OfflineBanner';
 import Avatar from '../components/shared/Avatar';
+import LangSwitcher from '../components/shared/LangSwitcher';
 
 const navItems = [
   { to: '/',         label: 'Painel',   icon: LayoutDashboard, exact: true },
@@ -142,6 +143,7 @@ export default function CustomerLayout() {
               Bem-vindo, {user?.name?.split(' ')[0]}
             </div>
             <div className="flex items-center gap-2">
+              <LangSwitcher compact />
               <NotificationBell />
               <div className="h-6 w-px bg-gray-200 dark:bg-slate-700" />
               <Avatar name={user?.name} src={user?.avatar} size="sm" />

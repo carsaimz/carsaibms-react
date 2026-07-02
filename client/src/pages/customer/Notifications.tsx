@@ -8,6 +8,7 @@ import { formatDateTime } from '../../lib/format';
 import Button from '../../components/ui/Button';
 
 export default function CustomerNotifications() {
+  const { t } = useTranslation();
   const { notifications, unreadCount, markRead } = useNotifications();
   const qc = useQueryClient();
 

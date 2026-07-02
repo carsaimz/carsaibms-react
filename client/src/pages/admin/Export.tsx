@@ -3,6 +3,7 @@ import { Download, FileSpreadsheet } from 'lucide-react';
 import { api, ApiClientError } from '../../lib/api';
 import { Card, CardBody, CardHeader, CardTitle } from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
+import { useTranslation } from 'react-i18next';
 
 const EXPORTS = [
   { key: 'products',  label: 'Produtos',        desc: 'SKU, barcode, nome, preço, stock, categoria' },
@@ -16,6 +17,7 @@ const EXPORTS = [
 ];
 
 export default function AdminExport() {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
